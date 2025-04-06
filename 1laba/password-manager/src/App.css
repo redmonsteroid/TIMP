@@ -240,3 +240,21 @@ h1 {
   margin-bottom: 10px;
   border-radius: 4px;
 }
+
+.password-item {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+}
+
+.password-item button {
+  margin-left: 0.5rem;
+}
+
+.actions {
+  margin-top: 0.5rem;
+}
+
+.actions a {
+  margin-right: 1rem;
+}

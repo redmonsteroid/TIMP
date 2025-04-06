@@ -1,45 +1,68 @@
 import socket
+import random
+import string
 
-def server() -> None:
-    HOST = '172.17.8.82'  # Внутренний адрес VDS
-    PORT = 6666            # Порт выше 1024
+def generate_password(length=12):
+    chars = string.ascii_letters + string.digits + "!@#$%^&*"
+    return ''.join(random.choice(chars) for _ in range(length))
+
+def get_security_tip():
+    tips = [
+        "Никогда не используйте один и тот же пароль для разных сервисов",
+        "Включайте двухфакторную аутентификацию везде, где это возможно",
+        "Регулярно обновляйте программное обеспечение",
+        "Не открывайте вложения в письмах от неизвестных отправителей",
+        "Используйте менеджер паролей для хранения учетных данных"
+    ]
+    return random.choice(tips)
+
+def handle_client(conn, addr):
+    try:
+        print(f"Подключение от: {addr}")
+        while True:
+            menu = "\nВыберите действие:\n1 - Сгенерировать пароль\n2 - Получить совет\nbye - Выход\n>> "
+            conn.sendall(menu.encode('utf-8'))
+            
+            data = conn.recv(1024).decode('utf-8').strip().lower()
+            if not data:
+                break
+                
+            if data == '1':
+                password = generate_password()
+                response = f"\nСгенерированный пароль: {password}\n"
+            elif data == '2':
+                tip = get_security_tip()
+                response = f"\nСовет по безопасности: {tip}\n"
+            elif data == 'bye':
+                conn.sendall("До свидания!".encode('utf-8'))
+                break
+            else:
+                response = "\nНеверный выбор\n"
+            
+            conn.sendall(response.encode('utf-8'))
+            
+    except ConnectionResetError:
+        print(f"Клиент {addr} отключился")
+    finally:
+        conn.close()
+        print(f"Соединение с {addr} закрыто")
+
+def main():
+    HOST = '172.17.8.82'
+    PORT = 6666
     
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
-
-        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.bind((HOST, PORT))
+        s.listen()
+        print(f"Сервер запущен на {HOST}:{PORT}")
         
         try:
-           
-            server_socket.bind((HOST, PORT))
-            server_socket.listen(2)
-            print(f"Сервер запущен на {HOST}:{PORT}")
-            
             while True:
-           
-                conn, addr = server_socket.accept()
-                print(f"Подключение от: {addr}")
-                
-                with conn:
-                    while True:
-                      
-                        data = conn.recv(1024)
-                        if not data:
-                            break
-                        
-                    
-                        print(f"Получено от {addr}: {data.decode()}")
-                        
-                        
-                        conn.sendall(data)
-                        
-                print(f"Соединение с {addr} закрыто")
-                
+                conn, addr = s.accept()
+                handle_client(conn, addr)
         except KeyboardInterrupt:
             print("\nСервер остановлен")
-        except Exception as e:
-            print(f"Ошибка: {e}")
-        finally:
-            server_socket.close()
 
 if __name__ == '__main__':
-    server()
+    main()

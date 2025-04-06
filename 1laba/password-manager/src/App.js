@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { PasswordProvider, usePasswordContext } from './context/PasswordContext'; // Добавили импорт хука
+import { PasswordProvider, usePasswordContext } from './context/PasswordContext';
 import AuthPage from './components/AuthPage';
 import PasswordList from './components/PasswordList';
 import AddPassword from './components/AddPassword';
+import EditPassword from './components/EditPassword';
 import './App.css';
 
 // Вынесли ProtectedRoute в отдельный компонент для лучшей читаемости
@@ -25,6 +26,11 @@ function App() {
               <Route path="/" element={
                 <ProtectedRoute>
                   <PasswordList />
+                </ProtectedRoute>
+              } />
+              <Route path="/edit/:id" element={
+                <ProtectedRoute>
+                  <EditPassword />
                 </ProtectedRoute>
               } />
               <Route path="/add" element={

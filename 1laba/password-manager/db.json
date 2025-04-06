@@ -5,28 +5,23 @@
       "username": "user1",
       "password": "pass1",
       "token": "secret-token"
-    },
-    {
-      "id": 2,
-      "username": "user2",
-      "password": "pass1",
-      "token": "secret-token"
     }
   ],
   "passwords": [
     {
-      "title": "123",
-      "login": "123",
-      "password": "123",
+      "id": 1,
+      "title": "Gmail",
+      "login": "user@gmail.com",
+      "password": "qwerty",
       "userId": 1,
-      "id": 4
+      "visible": false
     },
     {
-      "title": "qw",
-      "login": "user2",
+      "title": "12332",
+      "login": "user1",
       "password": "pass1",
-      "userId": 2,
-      "id": 5
+      "userId": 1,
+      "id": 2
     }
   ]
 }
