@@ -19,10 +19,16 @@ const AddPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addPassword({ ...form, userId: user.id }, user.token);
+      const currentDate = new Date().toISOString();
+      await addPassword({ 
+        ...form,
+        userId: user.id,
+        createdAt: currentDate,
+        updatedAt: currentDate
+      }, user.token);
       navigate('/');
     } catch (error) {
-      alert('Failed to add password');
+      alert(`Failed to add password: ${error.message}`);
     }
   };
 
@@ -31,20 +37,22 @@ const AddPassword = () => {
       <h2>Add New Password</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Service:</label>
+          <label>Service Name:</label>
           <input
             name="title"
             value={form.title}
             onChange={handleChange}
+            placeholder="e.g. Gmail, GitHub"
             required
           />
         </div>
         <div className="form-group">
-          <label>Login:</label>
+          <label>Username/Email:</label>
           <input
             name="login"
             value={form.login}
             onChange={handleChange}
+            placeholder="Your login"
             required
           />
         </div>
@@ -55,10 +63,18 @@ const AddPassword = () => {
             type="password"
             value={form.password}
             onChange={handleChange}
+            placeholder="Strong password"
             required
           />
         </div>
-        <button type="submit" className="btn">Save</button>
+        <div className="form-actions">
+          <button type="button" onClick={() => navigate('/')} className="btn cancel">
+            Cancel
+          </button>
+          <button type="submit" className="btn save">
+            Save Password
+          </button>
+        </div>
       </form>
     </div>
   );

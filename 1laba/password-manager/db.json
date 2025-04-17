@@ -15,26 +15,20 @@
   ],
   "passwords": [
     {
-      "id": 1,
-      "title": "Gmail",
-      "login": "user@gmail.com",
-      "password": "qwerty",
-      "userId": 1,
-      "visible": false
-    },
-    {
-      "title": "12332",
-      "login": "user1",
-      "password": "pass1",
-      "userId": 1,
-      "id": 2
-    },
-    {
       "title": "qwqe",
       "login": "user2",
       "password": "pass1",
       "userId": 2,
       "id": 3
+    },
+    {
+      "title": "123",
+      "login": "user1",
+      "password": "pass1",
+      "userId": 1,
+      "createdAt": "2025-04-17T15:52:08.258Z",
+      "updatedAt": "2025-04-17T15:54:15.077Z",
+      "id": 5
     }
   ]
 }

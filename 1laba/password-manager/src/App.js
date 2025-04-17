@@ -5,6 +5,7 @@ import RegisterForm from './components/RegisterForm'; // Добавили имп
 import PasswordList from './components/PasswordList';
 import AddPassword from './components/AddPassword';
 import EditPassword from './components/EditPassword';
+import PasswordDetail from './components/PasswordDetail';
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -38,6 +39,11 @@ function App() {
                 <ProtectedRoute>
                   <AddPassword />
                 </ProtectedRoute>
+              } />
+              <Route path="/password/:id" element={
+                <ProtectedRoute>
+               <PasswordDetail />
+              </ProtectedRoute>
               } />
             </Routes>
           </main>
