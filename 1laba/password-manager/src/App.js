@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { PasswordProvider, usePasswordContext } from './context/PasswordContext';
 import AuthPage from './components/AuthPage';
+import RegisterForm from './components/RegisterForm'; // Добавили импорт
 import PasswordList from './components/PasswordList';
 import AddPassword from './components/AddPassword';
 import EditPassword from './components/EditPassword';
 import './App.css';
 
-// Вынесли ProtectedRoute в отдельный компонент для лучшей читаемости
 const ProtectedRoute = ({ children }) => {
-  const { user } = usePasswordContext(); // Теперь хук доступен
+  const { user } = usePasswordContext();
   return user ? children : <Navigate to="/login" replace />;
 };
 
@@ -23,6 +23,7 @@ function App() {
           <main>
             <Routes>
               <Route path="/login" element={<AuthPage />} />
+              <Route path="/register" element={<RegisterForm />} /> {/* Добавили маршрут */}
               <Route path="/" element={
                 <ProtectedRoute>
                   <PasswordList />

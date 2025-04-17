@@ -51,8 +51,12 @@ const AuthPage = () => {
         <button type="submit" className="btn">
           Login
         </button>
+          <p className="auth-link">
+            Don't have an account? <a href="/register">Register</a>
+          </p>
       </form>
     </div>
+    
   );
 };
 

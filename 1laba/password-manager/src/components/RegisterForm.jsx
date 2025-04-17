@@ -1,42 +1,54 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePasswordContext } from '../context/PasswordContext';
 import { register } from '../services/api';
 
 const RegisterForm = () => {
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { loginUser } = usePasswordContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(form);
-      navigate('/login');
+      const user = await register(form);
+      loginUser(user);
+      navigate('/');
     } catch (err) {
-      setError('Registration failed');
+      setError('Registration failed. Username may be taken.');
     }
   };
 
   return (
-    <div className="auth-form">
+    <div className="auth-container">
       <h2>Register</h2>
       {error && <div className="error">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={form.username}
-          onChange={(e) => setForm({...form, username: e.target.value})}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={(e) => setForm({...form, password: e.target.value})}
-          required
-        />
-        <button type="submit">Register</button>
+        <div className="form-group">
+          <label>Username:</label>
+          <input
+            type="text"
+            value={form.username}
+            onChange={(e) => setForm({...form, username: e.target.value})}
+            required
+            minLength="3"
+          />
+        </div>
+        <div className="form-group">
+          <label>Password:</label>
+          <input
+            type="password"
+            value={form.password}
+            onChange={(e) => setForm({...form, password: e.target.value})}
+            required
+            minLength="6"
+          />
+        </div>
+        <button type="submit" className="btn">Register</button>
+        <p className="auth-link">
+          Already have an account? <a href="/login">Login</a>
+        </p>
       </form>
     </div>
   );

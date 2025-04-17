@@ -5,6 +5,12 @@
       "username": "user1",
       "password": "pass1",
       "token": "secret-token"
+    },
+    {
+      "username": "user2",
+      "password": "pass1",
+      "token": "secret-token",
+      "id": 2
     }
   ],
   "passwords": [
@@ -22,6 +28,13 @@
       "password": "pass1",
       "userId": 1,
       "id": 2
+    },
+    {
+      "title": "qwqe",
+      "login": "user2",
+      "password": "pass1",
+      "userId": 2,
+      "id": 3
     }
   ]
 }
